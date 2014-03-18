@@ -74,7 +74,11 @@ for host in "${KVM_HOSTS[@]}"; do
 	start_remote_vm "$root_at_host" "$remote_vm_name"
 	vm_mac_addr=`get_vm_mac_addr "$root_at_host" "$remote_vm_name"`
 	vm_ip_addr=`get_vm_ip_addr "$root_at_host" "$vm_mac_addr"`
-	remmina_conf_str_func $vm_mac_addr
+
+	config_exported_as="$host-$remote_vm_name.remmina"
+	remmina_conf_str_func "$vm_ip_addr" > "$config_exported_as"
+	echo "Exported as $config_exported_as!"
+	exit 0
     fi
 done
 
